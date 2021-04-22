@@ -1,0 +1,40 @@
+[
+  {
+    "name": "jenkins",
+    "image": "896013561597.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins-repo:w-plugins",
+    "essential": true,
+    "cpu": 2048,
+    "memory": 4096,
+    "user": "jenkins",
+    "environment": [
+      {
+        "name": "JAVA_OPTS",
+        "value": "-Duser.timezone=Asia/Singapore"
+      }
+    ],
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080
+      },
+      {
+        "containerPort": 50000,
+        "hostPort": 50000
+      }
+    ],
+    "mountPoints": [
+      {
+        "containerPath": "/var/jenkins_home",
+        "sourceVolume": "jenkins_home_efs"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "jenkins-ecs",
+        "awslogs-region": "ap-southeast-1",
+        "awslogs-stream-prefix": "jenkins-ecs"
+      }
+    }
+  }
+]
